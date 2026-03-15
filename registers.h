@@ -18,6 +18,9 @@ public:
     // Fetch the address of the specified register
     uint64_t get_address(std::string s);
 
+    // Return a pointer to the specified register
+    uint32_t* get_ptr(uint64_t reg);
+
     // Write a register
     void    write(uint64_t reg, uint64_t value);
 
