@@ -113,7 +113,7 @@ static void throwRuntime(const char* fmt, ...)
 //=================================================================================================
 // fetch_row() - Fetches a single row of data from SMEM
 //=================================================================================================
-void fetch_row(int row, int bank, unsigned char* out)
+void fetch_row(int row, int bank, unsigned char* out, bool little_endian)
 {
     // Compute the chip address of the first word of this row of data
     uint32_t chip_addr = 0x8000 + bank*0x20000 + row*256;    
@@ -127,11 +127,21 @@ void fetch_row(int row, int bank, unsigned char* out)
         // Fetch the next 32-bit word
         uint32_t value = fpga.read(reg.REG_CHIPIO_DATA_INCR);
 
-        // Write it to our buffer in big-endian order
-        *out++ = (value >> 24) & 0xFF;
-        *out++ = (value >> 16) & 0xFF;
-        *out++ = (value >>  8) & 0xFF;
-        *out++ = (value      ) & 0xFF;
+        // Write the four bytes to the buffer
+        if (little_endian)
+        {
+            *out++ = (value      ) & 0xFF;
+            *out++ = (value >>  8) & 0xFF;            
+            *out++ = (value >> 16) & 0xFF;
+            *out++ = (value >> 24) & 0xFF;
+        }
+        else
+        {
+            *out++ = (value >> 24) & 0xFF;
+            *out++ = (value >> 16) & 0xFF;
+            *out++ = (value >>  8) & 0xFF;
+            *out++ = (value      ) & 0xFF;
+        }
     }
 }
 //=================================================================================================
@@ -148,7 +158,7 @@ void fetch_in_smem_order()
     {
         for (int row = 0; row < 512; ++row)
         {
-            fetch_row(row, bank, out);
+            fetch_row(row, bank, out, false);
             out += 0x100;
         }
     }    
@@ -160,6 +170,7 @@ void fetch_in_smem_order()
 
 //=================================================================================================
 // fetch_in_abm_order() - Fetch the contents of SMEM in SMEM row order (i.e., bank first)
+//                        32-bit words in the ABM are in little-endian byte order
 //=================================================================================================
 void fetch_in_abm_order()
 {
@@ -169,7 +180,7 @@ void fetch_in_abm_order()
     {
         for (int bank = 0; bank < 8; ++ bank)
         {
-            fetch_row(row, bank, out);
+            fetch_row(row, bank, out, true);
             out += 0x100;
         }
     }    
