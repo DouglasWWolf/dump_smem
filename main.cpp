@@ -128,12 +128,10 @@ void fetch_row(int row, int bank, unsigned char* out)
         uint32_t value = fpga.read(reg.REG_CHIPIO_DATA_INCR);
 
         // Write the four bytes to the buffer
-        {
-            *out++ = (value >> 24) & 0xFF;
-            *out++ = (value >> 16) & 0xFF;
-            *out++ = (value >>  8) & 0xFF;
-            *out++ = (value      ) & 0xFF;
-        }
+        *out++ = (value >> 24) & 0xFF;
+        *out++ = (value >> 16) & 0xFF;
+        *out++ = (value >>  8) & 0xFF;
+        *out++ = (value      ) & 0xFF;
     }
 }
 //=================================================================================================
