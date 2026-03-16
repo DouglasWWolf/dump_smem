@@ -113,7 +113,7 @@ static void throwRuntime(const char* fmt, ...)
 //=================================================================================================
 // fetch_row() - Fetches a single row of data from SMEM
 //=================================================================================================
-void fetch_row(int row, int bank, unsigned char* out, bool little_endian)
+void fetch_row(int row, int bank, unsigned char* out)
 {
     // Compute the chip address of the first word of this row of data
     uint32_t chip_addr = 0x8000 + bank*0x20000 + row*256;    
@@ -128,14 +128,6 @@ void fetch_row(int row, int bank, unsigned char* out, bool little_endian)
         uint32_t value = fpga.read(reg.REG_CHIPIO_DATA_INCR);
 
         // Write the four bytes to the buffer
-        if (little_endian)
-        {
-            *out++ = (value      ) & 0xFF;
-            *out++ = (value >>  8) & 0xFF;            
-            *out++ = (value >> 16) & 0xFF;
-            *out++ = (value >> 24) & 0xFF;
-        }
-        else
         {
             *out++ = (value >> 24) & 0xFF;
             *out++ = (value >> 16) & 0xFF;
@@ -158,7 +150,7 @@ void fetch_in_smem_order()
     {
         for (int row = 0; row < 512; ++row)
         {
-            fetch_row(row, bank, out, false);
+            fetch_row(row, bank, out);
             out += 0x100;
         }
     }    
@@ -180,7 +172,7 @@ void fetch_in_abm_order()
     {
         for (int bank = 0; bank < 8; ++ bank)
         {
-            fetch_row(row, bank, out, true);
+            fetch_row(row, bank, out);
             out += 0x100;
         }
     }    
