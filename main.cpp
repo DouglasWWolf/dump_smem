@@ -3,6 +3,7 @@
 #include <iostream>
 #include "registers.h"
 #include "PciDevice.h"
+#include "register_struct.h"
 
 using std::string;
 
@@ -24,16 +25,11 @@ struct opt_t
 
 
 // This is every register this program cares about
-struct reg_t
-{
-    uint64_t REG_CHIPIO_ADDR;
-    uint64_t REG_CHIPIO_DATA_INCR;
-} reg;
+registers_t reg;
 
 // Function prototypes
 void execute();
 void parse_command_line(const char** argv);
-
 
 int main(int argc, const char** argv)
 {
@@ -184,12 +180,11 @@ void fetch_in_abm_order()
 //=================================================================================================
 void execute()
 {
-    // Read our definitions file
-    fpga.read_definitions("fpga_regs.h");
+    const char* filename = "fpga_regs.h";
 
-    // Fetch addresses we care about
-    reg.REG_CHIPIO_ADDR      = fpga.get_address("REG_CHIPIO_ADDR");
-    reg.REG_CHIPIO_DATA_INCR = fpga.get_address("REG_CHIPIO_DATA_INCR");
+    // Read our definitions file
+    if (!read_register_definitions(reg, filename))
+        throwRuntime("file not found: %s", filename);
 
     // Open a connection to our PCI device
     PCI.open("10ee:903f");
