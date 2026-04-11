@@ -180,7 +180,7 @@ void fetch_in_abm_order()
 //=================================================================================================
 void execute()
 {
-    const char* filename = "fpga_regs.h";
+    const char* filename = "fpga_reg.h";
 
     // Read our definitions file
     if (!read_register_definitions(reg, filename))
