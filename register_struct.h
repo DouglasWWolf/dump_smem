@@ -14,7 +14,7 @@ struct registers_t
     std::uint64_t REG_FORCE_SMEM               = 0xFFFFFFFF;
     std::uint64_t REG_CHIPIO_ADDR              = 0xFFFFFFFF;
     std::uint64_t REG_CHIPIO_DATA              = 0xFFFFFFFF;
-    std::uint64_t REG_CHIPIO_DATA_INCR         = 0xFFFFFFFF;
+    std::uint64_t REG_CHIPIO_CMD               = 0xFFFFFFFF;
     std::uint64_t REG_CHIP_SIM_SELECT          = 0xFFFFFFFF;
     std::uint64_t REG_SMEM_BUSY                = 0xFFFFFFFF;
     std::uint64_t REG_SMEM_ROWS_UPD            = 0xFFFFFFFF;

@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include <cstdio>
 #include <cstdarg>
 #include <iostream>
@@ -12,7 +13,7 @@ CRegisters fpga;
 
 // The PCI bus
 PciDevice PCI;
-
+ 
 // SMEM is exactly one megabyte
 unsigned char smem_space[1024*1024];
 
@@ -111,6 +112,8 @@ static void throwRuntime(const char* fmt, ...)
 //=================================================================================================
 void fetch_row(int row, int bank, unsigned char* out)
 {
+    constexpr uint32_t READ_AND_INC = 5;
+
     // Compute the chip address of the first word of this row of data
     uint32_t chip_addr = 0x8000 + bank*0x20000 + row*256;    
 
@@ -120,8 +123,12 @@ void fetch_row(int row, int bank, unsigned char* out)
     // Read 64 32-bit words and save them to our buffer
     for (int i=0; i<64; ++i)
     {
-        // Fetch the next 32-bit word
-        uint32_t value = fpga.read(reg.REG_CHIPIO_DATA_INCR);
+        // Start the next read transaction and wait for it to complete
+        fpga.write(reg.REG_CHIPIO_CMD, READ_AND_INC);
+        while (fpga.read(reg.REG_CHIPIO_CMD) != 0) usleep(1000);        
+        
+        // Fetch the 32-bit word
+        uint32_t value = fpga.read(reg.REG_CHIPIO_DATA);
 
         // Write the four bytes to the buffer
         *out++ = (value >> 24) & 0xFF;

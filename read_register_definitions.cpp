@@ -17,7 +17,7 @@ static void eval(registers_t& reg, const char* name, uint64_t descriptor)
     if (strcmp(name, "REG_FORCE_SMEM"              ) == 0) {reg.REG_FORCE_SMEM               = descriptor; return;}
     if (strcmp(name, "REG_CHIPIO_ADDR"             ) == 0) {reg.REG_CHIPIO_ADDR              = descriptor; return;}
     if (strcmp(name, "REG_CHIPIO_DATA"             ) == 0) {reg.REG_CHIPIO_DATA              = descriptor; return;}
-    if (strcmp(name, "REG_CHIPIO_DATA_INCR"        ) == 0) {reg.REG_CHIPIO_DATA_INCR         = descriptor; return;}
+    if (strcmp(name, "REG_CHIPIO_CMD"              ) == 0) {reg.REG_CHIPIO_CMD               = descriptor; return;}
     if (strcmp(name, "REG_CHIP_SIM_SELECT"         ) == 0) {reg.REG_CHIP_SIM_SELECT          = descriptor; return;}
     if (strcmp(name, "REG_SMEM_BUSY"               ) == 0) {reg.REG_SMEM_BUSY                = descriptor; return;}
     if (strcmp(name, "REG_SMEM_ROWS_UPD"           ) == 0) {reg.REG_SMEM_ROWS_UPD            = descriptor; return;}
