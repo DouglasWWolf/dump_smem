@@ -125,7 +125,7 @@ void fetch_row(int row, int bank, unsigned char* out)
     {
         // Start the next read transaction and wait for it to complete
         fpga.write(reg.REG_CHIPIO_CMD, READ_AND_INC);
-        while (fpga.read(reg.REG_CHIPIO_CMD) != 0) usleep(1000);        
+        while (fpga.read(reg.REG_CHIPIO_CMD) != 0) usleep(10);        
         
         // Fetch the 32-bit word
         uint32_t value = fpga.read(reg.REG_CHIPIO_DATA);
