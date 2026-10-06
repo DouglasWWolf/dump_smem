@@ -193,9 +193,16 @@ void execute()
     if (!read_register_definitions(reg, filename))
         throwRuntime("file not found: %s", filename);
 
-    // Open a connection to our PCI device
-    PCI.open("10ee:903f");
 
+    // Open a connection to our PCI device.  On ARM, we are connecting
+    // directly to a 4KB block of AXI addresses
+    #ifdef __aarch64__
+        uint64_t slave_addr = reg.REG_CHIPIO_ADDR & ~(0xFFF);
+        PCI.openDirect(slave_addr, 0x1000);
+    #else
+        PCI.open("10ee:903f");
+    #endif
+ 
     // Tell our registers what their base address in userspace is
     fpga.set_base_addr(PCI.resourceList()[0].baseAddr);
 
