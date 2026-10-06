@@ -9,29 +9,9 @@
 
 static void eval(registers_t& reg, const char* name, uint64_t descriptor)
 {
-    if (strcmp(name, "REG_LOAD_ABM_VIA_PCI"        ) == 0) {reg.REG_LOAD_ABM_VIA_PCI         = descriptor; return;}
-    if (strcmp(name, "REG_LOAD_ABM_VIA_PCI_load_0" ) == 0) {reg.REG_LOAD_ABM_VIA_PCI_load_0  = descriptor; return;}
-    if (strcmp(name, "REG_LOAD_ABM_VIA_PCI_load_1" ) == 0) {reg.REG_LOAD_ABM_VIA_PCI_load_1  = descriptor; return;}
-    if (strcmp(name, "REG_ABM_PCI_SRC_ADDR"        ) == 0) {reg.REG_ABM_PCI_SRC_ADDR         = descriptor; return;}
-    if (strcmp(name, "REG_SELECT_HSI"              ) == 0) {reg.REG_SELECT_HSI               = descriptor; return;}
-    if (strcmp(name, "REG_FORCE_SMEM"              ) == 0) {reg.REG_FORCE_SMEM               = descriptor; return;}
     if (strcmp(name, "REG_CHIPIO_ADDR"             ) == 0) {reg.REG_CHIPIO_ADDR              = descriptor; return;}
     if (strcmp(name, "REG_CHIPIO_DATA"             ) == 0) {reg.REG_CHIPIO_DATA              = descriptor; return;}
     if (strcmp(name, "REG_CHIPIO_CMD"              ) == 0) {reg.REG_CHIPIO_CMD               = descriptor; return;}
-    if (strcmp(name, "REG_CHIP_SIM_SELECT"         ) == 0) {reg.REG_CHIP_SIM_SELECT          = descriptor; return;}
-    if (strcmp(name, "REG_SMEM_BUSY"               ) == 0) {reg.REG_SMEM_BUSY                = descriptor; return;}
-    if (strcmp(name, "REG_SMEM_ROWS_UPD"           ) == 0) {reg.REG_SMEM_ROWS_UPD            = descriptor; return;}
-    if (strcmp(name, "REG_SMEM_WORDS_UPD"          ) == 0) {reg.REG_SMEM_WORDS_UPD           = descriptor; return;}
-    if (strcmp(name, "REG_ABM_COUNT"               ) == 0) {reg.REG_ABM_COUNT                = descriptor; return;}
-    if (strcmp(name, "REG_HS_CLK_REF"              ) == 0) {reg.REG_HS_CLK_REF               = descriptor; return;}
-    if (strcmp(name, "REG_HS_CLK_VCO"              ) == 0) {reg.REG_HS_CLK_VCO               = descriptor; return;}
-    if (strcmp(name, "REG_HS_CLK_VCO_divclk_divide") == 0) {reg.REG_HS_CLK_VCO_divclk_divide = descriptor; return;}
-    if (strcmp(name, "REG_HS_CLK_VCO_clkfbout_mult") == 0) {reg.REG_HS_CLK_VCO_clkfbout_mult = descriptor; return;}
-    if (strcmp(name, "REG_HS_CLK_VCO_clkfbout_frac") == 0) {reg.REG_HS_CLK_VCO_clkfbout_frac = descriptor; return;}
-    if (strcmp(name, "REG_HS_CLK_DIV"              ) == 0) {reg.REG_HS_CLK_DIV               = descriptor; return;}
-    if (strcmp(name, "REG_HS_CLK_DIV_clkout_divide") == 0) {reg.REG_HS_CLK_DIV_clkout_divide = descriptor; return;}
-    if (strcmp(name, "REG_HS_CLK_DIV_clkout_frac"  ) == 0) {reg.REG_HS_CLK_DIV_clkout_frac   = descriptor; return;}
-    if (strcmp(name, "REG_HS_CLK_FREQ"             ) == 0) {reg.REG_HS_CLK_FREQ              = descriptor; return;}
 };
 
 //=============================================================================
